@@ -1,17 +1,16 @@
 "use client";
 import { useDrag } from "react-dnd";
-
-const ItemType = {
-  IMAGE: "image",
-  TEXT: "text",
-};
+import { useAppDispatch, useAppSelector } from "@/store/store";
+import { ItemType } from "@/utils/constant";
 
 export default function LeftPanel() {
+  const selectedElement = useAppSelector((state) => state.selectedElement);
+
   const [, dragImage] = useDrag(
     () => ({
       type: ItemType.IMAGE,
       item: {
-        text: "圖片元件",
+        hint: "圖片元件",
         type: ItemType.IMAGE,
       },
     }),
@@ -22,7 +21,7 @@ export default function LeftPanel() {
     () => ({
       type: ItemType.TEXT,
       item: {
-        text: "文字元件",
+        hint: "文字元件",
         type: ItemType.TEXT,
       },
     }),
@@ -32,12 +31,47 @@ export default function LeftPanel() {
   return (
     <div className="h-screen px-8 flex items-center border-r border-white">
       <div className="flex flex-col">
-        <button ref={dragImage} className="border">
-          圖片元件
-        </button>
-        <button ref={dragText} className="border mt-4">
-          文字元件
-        </button>
+        {selectedElement ? (
+          <>
+            {selectedElement.type === "image" && (
+              <>
+                <input
+                  type="text"
+                  className="text-black"
+                  value={selectedElement.width}
+                />
+                <input
+                  type="text"
+                  className="text-black mt-4"
+                  value={selectedElement.height}
+                />
+                <input
+                  type="text"
+                  className="text-black mt-4"
+                  value={selectedElement.url}
+                />
+              </>
+            )}
+            {selectedElement.type === "text" && (
+              <>
+                <input
+                  type="text"
+                  className="text-black"
+                  value={selectedElement.content}
+                />
+              </>
+            )}
+          </>
+        ) : (
+          <>
+            <button ref={dragImage} className="border">
+              圖片元件
+            </button>
+            <button ref={dragText} className="border mt-4">
+              文字元件
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

@@ -1,52 +1,53 @@
 "use client";
 import { useState } from "react";
 import { useDrop } from "react-dnd";
-
-const ItemType = {
-  IMAGE: "image",
-  TEXT: "text",
-};
+import {
+  addElement,
+  setSelectedElement,
+  IElement,
+  IImageElement,
+  ITextElement,
+} from "@/store/elements";
+import { useAppDispatch, useAppSelector } from "@/store/store";
+import { ItemType } from "@/utils/constant";
 
 interface DropItem {
-  text: string;
+  hint: string;
   type: string;
-}
-
-interface Element {
-  id: number;
-  type: string;
-  text: string;
-  url?: string;
-  content?: string;
 }
 
 export default function RightPanel() {
-  const [elements, setElements] = useState<Element[]>([]);
+  const elements = useAppSelector((state) => state.elements);
+  const dispatch = useAppDispatch();
   const [hoveredElement, setHoveredElement] = useState<number | null>(null);
 
   const [, drop] = useDrop({
     accept: [ItemType.IMAGE, ItemType.TEXT],
     drop: (item: DropItem) => {
-      const newElement: Element = {
-        id: Date.now(),
-        type: item.type,
-        text: item.text,
-      };
-
       if (item.type === ItemType.IMAGE) {
-        newElement.url =
-          "https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg";
+        const newElement: IImageElement = {
+          id: Date.now(),
+          type: "image",
+          hint: item.hint,
+          width: "300px",
+          height: "300px",
+          url: "https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg",
+        };
+        dispatch(addElement(newElement));
       } else if (item.type === ItemType.TEXT) {
-        newElement.content = "Hello from Meepshop!";
+        const newElement: ITextElement = {
+          id: Date.now(),
+          type: "text",
+          hint: item.hint,
+          content: "Hello from Meepshop!",
+        };
+        dispatch(addElement(newElement));
       }
-
-      setElements((prevElements) => [...prevElements, newElement]);
     },
   });
 
-  const handleEdit = () => {
-    // Implement edit functionality based on element type
-    // console.log("Editing", element);
+  const handleEdit = (element: IElement | null) => {
+    dispatch(setSelectedElement(element));
   };
 
   const handleHover = (id: number | null) => {
@@ -62,7 +63,9 @@ export default function RightPanel() {
         {elements.map((element) => (
           <div
             key={element.id}
-            onClick={() => handleEdit()}
+            onClick={(event) => {
+              handleEdit(element);
+            }}
             onMouseEnter={() => handleHover(element.id)}
             onMouseLeave={() => handleHover(null)}
             className={`relative p-4 mb-4 ${
@@ -73,13 +76,18 @@ export default function RightPanel() {
           >
             {hoveredElement === element.id && (
               <div className="absolute p-2 rounded-md shadow-md top-0 left-1/2 transform -translate-x-1/2">
-                {element.text}
+                {element.hint}
               </div>
             )}
-            {element.type === ItemType.IMAGE && (
-              <img src={element.url} width={300} height={300} alt="image" />
+            {element.type === "image" && (
+              <img
+                src={element.url}
+                width={element.width}
+                height={element.height}
+                alt="image"
+              />
             )}
-            {element.type === ItemType.TEXT && <div>{element.content}</div>}
+            {element.type === "text" && <div>{element.content}</div>}
           </div>
         ))}
       </div>
