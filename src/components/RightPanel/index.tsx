@@ -82,8 +82,7 @@ export default function RightPanel() {
             {element.type === "image" && (
               <img
                 src={element.url}
-                width={element.width}
-                height={element.height}
+                style={{ width: element.width, height: element.height }}
                 alt="image"
               />
             )}

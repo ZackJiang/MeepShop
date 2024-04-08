@@ -1,9 +1,12 @@
 "use client";
 import { useDrag } from "react-dnd";
+import { updateElement } from "@/store/elements";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { ItemType } from "@/utils/constant";
+import { isValidCssLength, isValidUrl } from "@/utils/common";
 
 export default function LeftPanel() {
+  const dispatch = useAppDispatch();
   const selectedElement = useAppSelector((state) => state.selectedElement);
 
   const [, dragImage] = useDrag(
@@ -38,17 +41,47 @@ export default function LeftPanel() {
                 <input
                   type="text"
                   className="text-black"
-                  value={selectedElement.width}
+                  defaultValue={selectedElement.width}
+                  onChange={(event) => {
+                    if (isValidCssLength(event.target.value)) {
+                      dispatch(
+                        updateElement({
+                          ...selectedElement,
+                          width: event.target.value,
+                        })
+                      );
+                    }
+                  }}
                 />
                 <input
                   type="text"
                   className="text-black mt-4"
-                  value={selectedElement.height}
+                  defaultValue={selectedElement.height}
+                  onChange={(event) => {
+                    if (isValidCssLength(event.target.value)) {
+                      dispatch(
+                        updateElement({
+                          ...selectedElement,
+                          height: event.target.value,
+                        })
+                      );
+                    }
+                  }}
                 />
                 <input
                   type="text"
                   className="text-black mt-4"
-                  value={selectedElement.url}
+                  defaultValue={selectedElement.url}
+                  onChange={(event) => {
+                    if (isValidUrl(event.target.value)) {
+                      dispatch(
+                        updateElement({
+                          ...selectedElement,
+                          url: event.target.value,
+                        })
+                      );
+                    }
+                  }}
                 />
               </>
             )}
@@ -57,7 +90,15 @@ export default function LeftPanel() {
                 <input
                   type="text"
                   className="text-black"
-                  value={selectedElement.content}
+                  defaultValue={selectedElement.content}
+                  onChange={(event) => {
+                    dispatch(
+                      updateElement({
+                        ...selectedElement,
+                        content: event.target.value,
+                      })
+                    );
+                  }}
                 />
               </>
             )}
