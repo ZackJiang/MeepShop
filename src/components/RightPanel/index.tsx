@@ -59,11 +59,16 @@ export default function RightPanel() {
       <div className="border text-center">
         This is a fixed header, no need to modify
       </div>
-      <div ref={drop} className="flex-1 overflow-y-scroll">
+      <div
+        ref={drop}
+        className="flex-1 overflow-y-scroll"
+        onClick={() => handleEdit(null)}
+      >
         {elements.map((element) => (
           <div
             key={element.id}
             onClick={(event) => {
+              event.stopPropagation();
               handleEdit(element);
             }}
             onMouseEnter={() => handleHover(element.id)}

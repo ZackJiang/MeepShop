@@ -32,7 +32,7 @@ export default function LeftPanel() {
   );
 
   return (
-    <div className="h-screen w-[200px] px-6 flex items-center border-r border-white">
+    <div className="h-screen w-[300px] px-3 flex items-center border-r border-white">
       <div className="flex flex-col w-full">
         {selectedElement ? (
           <>
@@ -40,7 +40,7 @@ export default function LeftPanel() {
               <>
                 <input
                   type="text"
-                  className="text-black"
+                  className="w-full text-black"
                   defaultValue={selectedElement.width}
                   onChange={(event) => {
                     if (isValidCssLength(event.target.value)) {
@@ -55,7 +55,7 @@ export default function LeftPanel() {
                 />
                 <input
                   type="text"
-                  className="text-black mt-4"
+                  className="w-full text-black mt-4"
                   defaultValue={selectedElement.height}
                   onChange={(event) => {
                     if (isValidCssLength(event.target.value)) {
@@ -70,7 +70,7 @@ export default function LeftPanel() {
                 />
                 <input
                   type="text"
-                  className="text-black mt-4"
+                  className="w-full text-black mt-4"
                   defaultValue={selectedElement.url}
                   onChange={(event) => {
                     if (isValidUrl(event.target.value)) {
@@ -89,7 +89,7 @@ export default function LeftPanel() {
               <>
                 <input
                   type="text"
-                  className="text-black"
+                  className="w-full text-black"
                   defaultValue={selectedElement.content}
                   onChange={(event) => {
                     dispatch(
@@ -105,10 +105,10 @@ export default function LeftPanel() {
           </>
         ) : (
           <>
-            <button ref={dragImage} className="border">
+            <button ref={dragImage} className="w-full border">
               圖片元件
             </button>
-            <button ref={dragText} className="border mt-4">
+            <button ref={dragText} className="w-full border mt-4">
               文字元件
             </button>
           </>
