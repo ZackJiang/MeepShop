@@ -32,8 +32,8 @@ export default function LeftPanel() {
   );
 
   return (
-    <div className="h-screen px-8 flex items-center border-r border-white">
-      <div className="flex flex-col">
+    <div className="h-screen w-[200px] px-6 flex items-center border-r border-white">
+      <div className="flex flex-col w-full">
         {selectedElement ? (
           <>
             {selectedElement.type === "image" && (

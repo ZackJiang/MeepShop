@@ -55,11 +55,11 @@ export default function RightPanel() {
   };
 
   return (
-    <div className="w-full">
-      <div className="w-full border text-center">
+    <div className="w-full h-screen flex flex-col">
+      <div className="border text-center">
         This is a fixed header, no need to modify
       </div>
-      <div ref={drop} className="h-full">
+      <div ref={drop} className="flex-1 overflow-y-scroll">
         {elements.map((element) => (
           <div
             key={element.id}
