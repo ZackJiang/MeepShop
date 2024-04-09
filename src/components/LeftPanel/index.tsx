@@ -1,12 +1,12 @@
 "use client";
 import { useDrag } from "react-dnd";
-import { useAppDispatch, useAppSelector } from "@/store/store";
+import { useAppSelector } from "@/store/store";
 import { ItemType } from "@/utils/constant";
 import ImageEditor from "./ImageEditor";
 import TextEditor from "./TextEditor";
+import CarouselEditor from "./CarouselEditor";
 
 export default function LeftPanel() {
-  const dispatch = useAppDispatch();
   const selectedElement = useAppSelector((state) => state.selectedElement);
 
   const [, dragImage] = useDrag(
@@ -52,6 +52,9 @@ export default function LeftPanel() {
             )}
             {selectedElement.type === "text" && (
               <TextEditor element={selectedElement} />
+            )}
+            {selectedElement.type === "carousel" && (
+              <CarouselEditor element={selectedElement} />
             )}
           </>
         ) : (

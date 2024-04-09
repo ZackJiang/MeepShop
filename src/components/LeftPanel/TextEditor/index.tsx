@@ -2,11 +2,11 @@ import { ITextElement } from "@/store/elements";
 import { updateElement } from "@/store/elements";
 import { useAppDispatch } from "@/store/store";
 
-interface TextEditorProps {
+interface ITextEditorProps {
   element: ITextElement;
 }
 
-export default function ITextEditor(props: TextEditorProps) {
+export default function ITextEditor(props: ITextEditorProps) {
   const dispatch = useAppDispatch();
   const { element } = props;
 

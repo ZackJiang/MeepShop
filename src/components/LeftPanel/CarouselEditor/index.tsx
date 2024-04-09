@@ -1,13 +1,13 @@
-import { IImageElement } from "@/store/elements";
+import { ICarouselElement } from "@/store/elements";
 import { updateElement } from "@/store/elements";
 import { isValidCssLength, isValidUrl } from "@/utils/common";
 import { useAppDispatch } from "@/store/store";
 
-interface IImageEditorProps {
-  element: IImageElement;
+interface ICarouselEditorProps {
+  element: ICarouselElement;
 }
 
-export default function ImageEditor(props: IImageEditorProps) {
+export default function CarouselEditor(props: ICarouselEditorProps) {
   const dispatch = useAppDispatch();
   const { element } = props;
 
@@ -43,21 +43,26 @@ export default function ImageEditor(props: IImageEditorProps) {
           }
         }}
       />
-      <input
-        type="text"
-        className="w-full text-black mt-4"
-        defaultValue={element.url}
-        onChange={(event) => {
-          if (isValidUrl(event.target.value)) {
-            dispatch(
-              updateElement({
-                ...element,
-                url: event.target.value,
-              })
-            );
-          }
-        }}
-      />
+      {element.urls.map((url, index) => (
+        <input
+          key={index}
+          type="text"
+          className="w-full text-black mt-4"
+          defaultValue={url}
+          onChange={(event) => {
+            if (isValidUrl(event.target.value)) {
+              let newUrls = [...element.urls];
+              newUrls[index] = event.target.value;
+              dispatch(
+                updateElement({
+                  ...element,
+                  urls: newUrls,
+                })
+              );
+            }
+          }}
+        />
+      ))}
     </>
   );
 }

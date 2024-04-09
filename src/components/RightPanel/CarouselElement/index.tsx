@@ -1,11 +1,11 @@
 import Slider from "react-slick";
 import { ICarouselElement } from "@/store/elements";
 
-interface CarouselElementProps {
+interface ICarouselElementProps {
   element: ICarouselElement;
 }
 
-export default function CarouselElement(props: CarouselElementProps) {
+export default function CarouselElement(props: ICarouselElementProps) {
   const { element } = props;
   const { width, height, urls } = element;
 

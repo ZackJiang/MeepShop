@@ -1,10 +1,10 @@
 import { ITextElement } from "@/store/elements";
 
-interface ImageElementProps {
+interface ITextElementProps {
   element: ITextElement;
 }
 
-export default function ImageElement(props: ImageElementProps) {
+export default function ImageElement(props: ITextElementProps) {
   const { element } = props;
 
   return <div>{element.content}</div>;

@@ -1,10 +1,10 @@
 import { IImageElement } from "@/store/elements";
 
-interface ImageElementProps {
+interface IImageElementProps {
   element: IImageElement;
 }
 
-export default function ImageElement(props: ImageElementProps) {
+export default function ImageElement(props: IImageElementProps) {
   const { element } = props;
 
   return (
