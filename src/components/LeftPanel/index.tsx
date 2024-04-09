@@ -31,6 +31,17 @@ export default function LeftPanel() {
     []
   );
 
+  const [, dragCarousel] = useDrag(
+    () => ({
+      type: ItemType.CAROUSEL,
+      item: {
+        hint: "輪播元件",
+        type: ItemType.CAROUSEL,
+      },
+    }),
+    []
+  );
+
   return (
     <div className="h-screen w-[300px] px-3 flex items-center border-r border-white">
       <div className="flex flex-col w-full">
@@ -110,6 +121,9 @@ export default function LeftPanel() {
             </button>
             <button ref={dragText} className="w-full border mt-4">
               文字元件
+            </button>
+            <button ref={dragCarousel} className="w-full border mt-4">
+              輪播元件
             </button>
           </>
         )}

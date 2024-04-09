@@ -17,7 +17,16 @@ export interface ITextElement {
   content: string;
 }
 
-export type IElement = IImageElement | ITextElement;
+export interface ICarouselElement {
+  id: number;
+  type: "carousel";
+  hint: string;
+  width: string;
+  height: string;
+  urls: string[];
+}
+
+export type IElement = IImageElement | ITextElement | ICarouselElement;
 
 export interface IElements {
   elements: IElement[];

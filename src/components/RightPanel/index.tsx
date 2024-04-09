@@ -7,9 +7,13 @@ import {
   IElement,
   IImageElement,
   ITextElement,
+  ICarouselElement,
 } from "@/store/elements";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { ItemType } from "@/utils/constant";
+import ImageElement from "./ImageElement";
+import TextElement from "./TextElement";
+import CarouselElement from "./CarouselElement";
 
 interface DropItem {
   hint: string;
@@ -22,7 +26,7 @@ export default function RightPanel() {
   const [hoveredElement, setHoveredElement] = useState<number | null>(null);
 
   const [, drop] = useDrop({
-    accept: [ItemType.IMAGE, ItemType.TEXT],
+    accept: [ItemType.IMAGE, ItemType.TEXT, ItemType.CAROUSEL],
     drop: (item: DropItem) => {
       if (item.type === ItemType.IMAGE) {
         const newElement: IImageElement = {
@@ -40,6 +44,19 @@ export default function RightPanel() {
           type: "text",
           hint: item.hint,
           content: "Hello from Meepshop!",
+        };
+        dispatch(addElement(newElement));
+      } else if (item.type === ItemType.CAROUSEL) {
+        const newElement: ICarouselElement = {
+          id: Date.now(),
+          type: "carousel",
+          hint: item.hint,
+          width: "300px",
+          height: "300px",
+          urls: [
+            "https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg",
+            "https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg",
+          ],
         };
         dispatch(addElement(newElement));
       }
@@ -84,14 +101,11 @@ export default function RightPanel() {
                 {element.hint}
               </div>
             )}
-            {element.type === "image" && (
-              <img
-                src={element.url}
-                style={{ width: element.width, height: element.height }}
-                alt="image"
-              />
+            {element.type === "image" && <ImageElement element={element} />}
+            {element.type === "text" && <TextElement element={element} />}
+            {element.type === "carousel" && (
+              <CarouselElement element={element} />
             )}
-            {element.type === "text" && <div>{element.content}</div>}
           </div>
         ))}
       </div>
