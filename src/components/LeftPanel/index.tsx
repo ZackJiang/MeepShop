@@ -1,9 +1,9 @@
 "use client";
 import { useDrag } from "react-dnd";
-import { updateElement } from "@/store/elements";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { ItemType } from "@/utils/constant";
-import { isValidCssLength, isValidUrl } from "@/utils/common";
+import ImageEditor from "./ImageEditor";
+import TextEditor from "./TextEditor";
 
 export default function LeftPanel() {
   const dispatch = useAppDispatch();
@@ -48,70 +48,10 @@ export default function LeftPanel() {
         {selectedElement ? (
           <>
             {selectedElement.type === "image" && (
-              <>
-                <input
-                  type="text"
-                  className="w-full text-black"
-                  defaultValue={selectedElement.width}
-                  onChange={(event) => {
-                    if (isValidCssLength(event.target.value)) {
-                      dispatch(
-                        updateElement({
-                          ...selectedElement,
-                          width: event.target.value,
-                        })
-                      );
-                    }
-                  }}
-                />
-                <input
-                  type="text"
-                  className="w-full text-black mt-4"
-                  defaultValue={selectedElement.height}
-                  onChange={(event) => {
-                    if (isValidCssLength(event.target.value)) {
-                      dispatch(
-                        updateElement({
-                          ...selectedElement,
-                          height: event.target.value,
-                        })
-                      );
-                    }
-                  }}
-                />
-                <input
-                  type="text"
-                  className="w-full text-black mt-4"
-                  defaultValue={selectedElement.url}
-                  onChange={(event) => {
-                    if (isValidUrl(event.target.value)) {
-                      dispatch(
-                        updateElement({
-                          ...selectedElement,
-                          url: event.target.value,
-                        })
-                      );
-                    }
-                  }}
-                />
-              </>
+              <ImageEditor element={selectedElement} />
             )}
             {selectedElement.type === "text" && (
-              <>
-                <input
-                  type="text"
-                  className="w-full text-black"
-                  defaultValue={selectedElement.content}
-                  onChange={(event) => {
-                    dispatch(
-                      updateElement({
-                        ...selectedElement,
-                        content: event.target.value,
-                      })
-                    );
-                  }}
-                />
-              </>
+              <TextEditor element={selectedElement} />
             )}
           </>
         ) : (

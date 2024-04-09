@@ -55,7 +55,7 @@ export default function RightPanel() {
           height: "300px",
           urls: [
             "https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg",
-            "https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg",
+            "https://res.cloudinary.com/demo/w_300/basketball_shot.jpg",
           ],
         };
         dispatch(addElement(newElement));
