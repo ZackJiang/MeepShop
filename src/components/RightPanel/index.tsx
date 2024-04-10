@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useDrop } from "react-dnd";
 import {
   addElement,
@@ -21,6 +21,7 @@ interface DropItem {
 }
 
 export default function RightPanel() {
+  const dropRef = useRef<HTMLDivElement>(null);
   const elements = useAppSelector((state) => state.elements);
   const dispatch = useAppDispatch();
   const [hoveredElement, setHoveredElement] = useState<number | null>(null);
@@ -71,13 +72,15 @@ export default function RightPanel() {
     setHoveredElement(id);
   };
 
+  drop(dropRef);
+
   return (
     <div className="w-full h-screen flex flex-col">
       <div className="border text-center">
         This is a fixed header, no need to modify
       </div>
       <div
-        ref={drop}
+        ref={dropRef}
         className="flex-1 overflow-y-scroll"
         onClick={() => handleEdit(null)}
       >
