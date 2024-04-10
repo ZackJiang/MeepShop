@@ -43,7 +43,7 @@ export default function RightPanel() {
           id: Date.now(),
           type: "text",
           hint: item.hint,
-          content: "Hello from Meepshop!",
+          content: "<p>Hello from Meepshop!</p>",
         };
         dispatch(addElement(newElement));
       } else if (item.type === ItemType.CAROUSEL) {

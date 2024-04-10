@@ -7,5 +7,5 @@ interface ITextElementProps {
 export default function ImageElement(props: ITextElementProps) {
   const { element } = props;
 
-  return <div>{element.content}</div>;
+  return <div dangerouslySetInnerHTML={{ __html: element.content }}></div>;
 }
